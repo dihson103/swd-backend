@@ -25,7 +25,7 @@ public class JwtService implements IJwtService {
         Algorithm algorithm = Algorithm.HMAC256(security_key.getBytes());
         return JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 50 * 60 *1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 50 * 60 *1000 * 10))
                 .withClaim("roles", authorities.stream().map(GrantedAuthority::getAuthority).toList())
                 .sign(algorithm);
     }
@@ -35,7 +35,7 @@ public class JwtService implements IJwtService {
         Algorithm algorithm = Algorithm.HMAC256(security_key.getBytes());
         return JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 70 * 60 *1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 70 * 60 *1000 * 10))
                 .withClaim("roles", authorities.stream().map(GrantedAuthority::getAuthority).toList())
                 .sign(algorithm);
     }
