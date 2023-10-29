@@ -63,11 +63,9 @@ public class MyExceptionHandle {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(UNPROCESSABLE_ENTITY)
-    public Map<String, String> handleException(Exception exception){
-        Map<String, String> errors = new HashMap<>();
-        errors.put("message", exception.getMessage());
+    public ApiResponse handleException(Exception exception){
         exception.printStackTrace();
-        return errors;
+        return ApiResponse.builder().message(exception.getMessage()).build();
     }
 
 }
