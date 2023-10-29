@@ -111,7 +111,7 @@ public class CourseController {
                 .build();
     }
 
-    @GetMapping()
+    @GetMapping("search/")
     @ResponseStatus(OK)
     @PermitAll
     public ApiResponse<List<CourseResponse>> searchCourses(@RequestParam("search-value") String searchValue){
