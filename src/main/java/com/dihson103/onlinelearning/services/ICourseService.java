@@ -22,4 +22,8 @@ public interface ICourseService {
     List<CourseResponse> filterCourses(FilterRequestDto filterRequestDto);
 
     void changeCourseStatus(CourseStatusRequest courseStatusRequest);
+
+    List<CourseResponse> findTopNewCourses();
+
+    List<CourseResponse> searchCourses(String searchValue);
 }

@@ -15,6 +15,9 @@ import com.dihson103.onlinelearning.services.FiltersSpecification;
 import com.dihson103.onlinelearning.services.ICourseService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -97,6 +100,25 @@ public class CourseService implements ICourseService {
             return;
         }
         updateAllRequestToTrue(courseStatusRequest, course);
+    }
+
+    @Override
+    public List<CourseResponse> findTopNewCourses() {
+        Pageable top5 = PageRequest.of(0, 5, Sort.by("id").descending());
+        List<Course> top5NewestCourses = courseRepository.findTopNewest(top5);
+        return top5NewestCourses
+                .stream()
+                .map(course -> modelMapper.map(course, CourseResponse.class))
+                .toList();
+    }
+
+    @Override
+    public List<CourseResponse> searchCourses(String searchValue) {
+        List<Course> courses = courseRepository.findByStatusAndCourseName(searchValue);
+        return courses
+                .stream()
+                .map(course -> modelMapper.map(course, CourseResponse.class))
+                .toList();
     }
 
     private void updateAllRequestToTrue(CourseStatusRequest courseStatusRequest, Course course ) {

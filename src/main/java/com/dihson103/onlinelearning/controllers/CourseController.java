@@ -100,4 +100,26 @@ public class CourseController {
                 .build();
     }
 
+    @GetMapping("newest")
+    @ResponseStatus(OK)
+    @PermitAll
+    public ApiResponse<List<CourseResponse>> getTopNewCourses(){
+        List<CourseResponse> courseResponses = service.findTopNewCourses();
+        return ApiResponse.<List<CourseResponse>>builder()
+                .message("Get top 5 newest courses success.")
+                .data(courseResponses)
+                .build();
+    }
+
+    @GetMapping()
+    @ResponseStatus(OK)
+    @PermitAll
+    public ApiResponse<List<CourseResponse>> searchCourses(@RequestParam("search-value") String searchValue){
+        List<CourseResponse> courseResponses = service.searchCourses(searchValue);
+        return ApiResponse.<List<CourseResponse>>builder()
+                .message("Get top 5 newest courses success.")
+                .data(courseResponses)
+                .build();
+    }
+
 }
