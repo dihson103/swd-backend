@@ -1,6 +1,7 @@
 package com.dihson103.onlinelearning.controllers;
 
 import com.amazonaws.HttpMethod;
+import com.dihson103.onlinelearning.dto.common.ApiResponse;
 import com.dihson103.onlinelearning.services.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,10 @@ public class AwsS3Controller {
 
     @GetMapping("/get-url")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'ADMIN_COURSE', 'USER')")
-    public ResponseEntity<String> getUrl(@RequestParam String filename) {
-        return ResponseEntity.ok(fileService.generatePreSignedUrl(
-                filename, HttpMethod.GET));
+    public ApiResponse getUrl(@RequestParam String filename) {
+        return ApiResponse.builder()
+                .message(fileService.generatePreSignedUrl(filename, HttpMethod.GET))
+                .build();
     }
 
 }
