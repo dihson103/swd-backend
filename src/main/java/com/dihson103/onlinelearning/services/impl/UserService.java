@@ -125,6 +125,7 @@ public class UserService implements IUserService {
         checkUpdateUserValid(oldUser, newUser);
         newUser.setPassword(oldUser.getPassword());
         newUser.setStatus(true);
+        newUser.setRole(oldUser.getRole());
         return newUser;
     }
 
