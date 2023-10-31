@@ -30,4 +30,10 @@ public interface EnrollRepository extends JpaRepository<Enroll, EnrollKey>, JpaS
     """)
     Optional<Enroll> getEnrollByUsernameAndCourse(String username, Integer courseId);
 
+    @Query("""
+        SELECT e FROM Enroll e 
+        WHERE e.user.username = :username AND e.course.courseName  LIKE %:searchValue%
+    """)
+    List<Enroll> getEnrollsByUsernameAndSearch(String username, String searchValue);
+
 }

@@ -25,6 +25,7 @@ import java.util.*;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Configuration
@@ -75,7 +76,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     throw new Exception("Token was revoked or expired.");
                 }
             }catch (Exception exception){
-                response.setStatus(FORBIDDEN.value());
+                response.setStatus(UNAUTHORIZED.value());
                 Map<String, String> error = new HashMap<>();
                 error.put("message", exception.getMessage());
                 response.setContentType(APPLICATION_JSON_VALUE);

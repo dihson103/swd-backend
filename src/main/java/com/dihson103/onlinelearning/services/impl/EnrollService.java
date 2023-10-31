@@ -71,6 +71,14 @@ public class EnrollService implements IEnrollService {
                 .toList();
     }
 
+    @Override
+    public List<EnrollResponse> searchEnrolledCourses(String username, String searchValue) {
+        List<Enroll> enrolls = enrollRepository.getEnrollsByUsernameAndSearch(username, searchValue);
+        return enrolls.stream()
+                .map(this::apply)
+                .toList();
+    }
+
     private EnrollResponse apply(Enroll enroll) {
         return EnrollResponse.builder()
                 .courseResponse(modelMapper.map(enroll.getCourse(), CourseResponse.class))
