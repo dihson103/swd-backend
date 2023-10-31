@@ -3,6 +3,7 @@ package com.dihson103.onlinelearning.controllers;
 import com.amazonaws.HttpMethod;
 import com.dihson103.onlinelearning.dto.common.ApiResponse;
 import com.dihson103.onlinelearning.services.FileService;
+import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,7 +26,7 @@ public class AwsS3Controller {
     }
 
     @GetMapping("/get-url")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'ADMIN_COURSE', 'USER')")
+    @PermitAll
     public ApiResponse getUrl(@RequestParam String filename) {
         return ApiResponse.builder()
                 .message(fileService.generatePreSignedUrl(filename, HttpMethod.GET))
