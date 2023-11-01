@@ -60,7 +60,7 @@ public class SessionController {
     }
 
     @GetMapping("{lesson-id}/lesson")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'ADMIN_COURSE')")
+    @ResponseStatus(OK)
     public ApiResponse<List<SessionResponse>> getSessionsByLesson(@PathVariable("lesson-id") Integer lessonId){
         List<SessionResponse> sessionResponses = service.getSessionsActiveByLesson(lessonId);
         return ApiResponse.<List<SessionResponse>>builder()
