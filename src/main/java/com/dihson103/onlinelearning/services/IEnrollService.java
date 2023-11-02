@@ -10,4 +10,6 @@ public interface IEnrollService {
     List<EnrollResponse> getEnrollListByUser(String username);
 
     List<EnrollResponse> searchEnrolledCourses(String username, String searchValue);
+
+    void checkVideoPermission(String username, Integer courseId);
 }

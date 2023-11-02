@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.dihson103.onlinelearning.entities.Role.ADMIN;
+import static com.dihson103.onlinelearning.entities.Role.ADMIN_COURSE;
+
 @Service
 @RequiredArgsConstructor
 public class EnrollService implements IEnrollService {
@@ -80,6 +83,17 @@ public class EnrollService implements IEnrollService {
         return enrolls.stream()
                 .map(this::apply)
                 .toList();
+    }
+
+    @Override
+    public void checkVideoPermission(String username, Integer courseId) {
+        UserEntity user = userRepository.findByUsernameAndStatusIsTrue(username)
+                .orElseThrow(() ->  new IllegalArgumentException("Can not find user."));
+        if(user.getRole().equals(ADMIN) || user.getRole().equals(ADMIN_COURSE)){
+            return;
+        }
+        Enroll enroll = enrollRepository.getEnrollByUsernameAndCourse(username, courseId)
+                .orElseThrow(() -> new IllegalArgumentException("User was not enrolled this course."));
     }
 
     private EnrollResponse apply(Enroll enroll) {
