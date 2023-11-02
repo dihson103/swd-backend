@@ -34,9 +34,11 @@ public class AwsS3Controller {
     @PermitAll
     public ApiResponse getUrl(@RequestParam String filename,
                               @RequestParam(name = "course-id", required = false) Integer courseId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        enrollService.checkVideoPermission(username, courseId);
+        if(courseId != null){
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            enrollService.checkVideoPermission(username, courseId);
+        }
         return ApiResponse.builder()
                 .message(fileService.generatePreSignedUrl(filename, HttpMethod.GET))
                 .build();
