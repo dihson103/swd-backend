@@ -30,10 +30,10 @@ public class AwsS3Controller {
                 UUID.randomUUID()+"."+extension, HttpMethod.PUT));
     }
 
-    @GetMapping("/get-url/{course-id}")
+    @GetMapping("/get-url")
     @PermitAll
     public ApiResponse getUrl(@RequestParam String filename,
-                              @PathVariable(name = "course-id", required = false) Integer courseId) {
+                              @RequestParam(name = "course-id", required = false) Integer courseId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         enrollService.checkVideoPermission(username, courseId);
