@@ -1,5 +1,6 @@
 package com.dihson103.onlinelearning.services.impl;
 
+import com.amazonaws.HttpMethod;
 import com.dihson103.onlinelearning.dto.course.CourseResponse;
 import com.dihson103.onlinelearning.dto.course.CourseStatusRequest;
 import com.dihson103.onlinelearning.dto.course.CreateCourseRequest;
@@ -11,6 +12,7 @@ import com.dihson103.onlinelearning.entities.Session;
 import com.dihson103.onlinelearning.repositories.CourseRepository;
 import com.dihson103.onlinelearning.repositories.LessonRepository;
 import com.dihson103.onlinelearning.repositories.SessionRepository;
+import com.dihson103.onlinelearning.services.FileService;
 import com.dihson103.onlinelearning.services.FiltersSpecification;
 import com.dihson103.onlinelearning.services.ICourseService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ public class CourseService implements ICourseService {
     private final CourseRepository courseRepository;
     private final LessonRepository lessonRepository;
     private final SessionRepository sessionRepository;
+    private final FileService fileService;
     private final ModelMapper modelMapper;
     private final FiltersSpecification<Course> filtersSpecification;
 
@@ -74,6 +77,10 @@ public class CourseService implements ICourseService {
     @Override
     public List<CourseResponse> getAllCourseStatusIsTrue() {
         List<Course> courses = courseRepository.findByStatusIsTrue();
+        //TODO get image's link
+        courses.stream().forEach(course -> {
+            course.setImage(fileService.generatePreSignedUrl(course.getImage(), HttpMethod.GET));
+        });
         return courses.stream()
                 .map(course -> modelMapper.map(course, CourseResponse.class))
                 .toList();
@@ -115,6 +122,9 @@ public class CourseService implements ICourseService {
     @Override
     public List<CourseResponse> searchCourses(String searchValue) {
         List<Course> courses = courseRepository.findByStatusAndCourseName(searchValue);
+        courses.stream().forEach(course -> {
+            course.setImage(fileService.generatePreSignedUrl(course.getImage(), HttpMethod.GET));
+        });
         return courses
                 .stream()
                 .map(course -> modelMapper.map(course, CourseResponse.class))

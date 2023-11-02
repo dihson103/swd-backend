@@ -1,11 +1,13 @@
 package com.dihson103.onlinelearning.services.impl;
 
+import com.amazonaws.HttpMethod;
 import com.dihson103.onlinelearning.dto.course.CourseResponse;
 import com.dihson103.onlinelearning.dto.enroll.EnrollResponse;
 import com.dihson103.onlinelearning.entities.*;
 import com.dihson103.onlinelearning.repositories.CourseRepository;
 import com.dihson103.onlinelearning.repositories.EnrollRepository;
 import com.dihson103.onlinelearning.repositories.UserRepository;
+import com.dihson103.onlinelearning.services.FileService;
 import com.dihson103.onlinelearning.services.FiltersSpecification;
 import com.dihson103.onlinelearning.services.IEnrollService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class EnrollService implements IEnrollService {
     private final EnrollRepository enrollRepository;
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;
+    private final FileService fileService;
     private final ModelMapper modelMapper;
     private final FiltersSpecification<Enroll> filtersSpecification;
 
@@ -80,8 +83,10 @@ public class EnrollService implements IEnrollService {
     }
 
     private EnrollResponse apply(Enroll enroll) {
+        Course course = enroll.getCourse();
+        course.setImage(fileService.generatePreSignedUrl(course.getImage(), HttpMethod.GET));
         return EnrollResponse.builder()
-                .courseResponse(modelMapper.map(enroll.getCourse(), CourseResponse.class))
+                .courseResponse(modelMapper.map(course, CourseResponse.class))
                 .enrollDate(enroll.getEnrollDate())
                 .price(enroll.getPrice())
                 .build();
