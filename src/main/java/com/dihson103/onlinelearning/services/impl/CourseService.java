@@ -33,7 +33,6 @@ public class CourseService implements ICourseService {
     private final CourseRepository courseRepository;
     private final LessonRepository lessonRepository;
     private final SessionRepository sessionRepository;
-    private final FileService fileService;
     private final ModelMapper modelMapper;
     private final FiltersSpecification<Course> filtersSpecification;
 
@@ -77,10 +76,6 @@ public class CourseService implements ICourseService {
     @Override
     public List<CourseResponse> getAllCourseStatusIsTrue() {
         List<Course> courses = courseRepository.findByStatusIsTrue();
-        //TODO get image's link
-        courses.stream().forEach(course -> {
-            course.setImage(fileService.generatePreSignedUrl(course.getImage(), HttpMethod.GET));
-        });
         return courses.stream()
                 .map(course -> modelMapper.map(course, CourseResponse.class))
                 .toList();
@@ -122,9 +117,6 @@ public class CourseService implements ICourseService {
     @Override
     public List<CourseResponse> searchCourses(String searchValue) {
         List<Course> courses = courseRepository.findByStatusAndCourseName(searchValue);
-        courses.stream().forEach(course -> {
-            course.setImage(fileService.generatePreSignedUrl(course.getImage(), HttpMethod.GET));
-        });
         return courses
                 .stream()
                 .map(course -> modelMapper.map(course, CourseResponse.class))
