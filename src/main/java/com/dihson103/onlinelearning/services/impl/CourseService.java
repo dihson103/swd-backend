@@ -58,8 +58,7 @@ public class CourseService implements ICourseService {
         course.setCourseName(courseRequest.getCourseName());
         course.setPrice(courseRequest.getPrice());
         course.setTitle(courseRequest.getTitle());
-        course.setImage(course.getImage());
-        course.setStatus(false);
+        course.setImage(courseRequest.getImage());
         courseRepository.save(course);
     }
 
