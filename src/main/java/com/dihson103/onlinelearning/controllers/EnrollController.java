@@ -58,4 +58,16 @@ public class EnrollController {
                 .build();
     }
 
+    @GetMapping("/{course-id}/is-enrolled")
+    @ResponseStatus(OK)
+    @PermitAll
+    public ApiResponse checkIsUserEnrolled(@PathVariable("course-id") Integer courseId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Boolean isUserEnrolled = service.checkIsUserEnrolled(username, courseId);
+        return ApiResponse.builder()
+                .message(isUserEnrolled ? "User is already enrolled" : "User is not already enrolled")
+                .build();
+    }
+
 }

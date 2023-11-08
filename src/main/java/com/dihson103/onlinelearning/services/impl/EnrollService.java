@@ -96,9 +96,15 @@ public class EnrollService implements IEnrollService {
                 .orElseThrow(() -> new IllegalArgumentException("User was not enrolled this course."));
     }
 
+    @Override
+    public Boolean checkIsUserEnrolled(String username, Integer courseId) {
+        Enroll enroll = enrollRepository.getEnrollByUsernameAndCourse(username, courseId).orElse(null);
+        return enroll != null;
+    }
+
     private EnrollResponse apply(Enroll enroll) {
         Course course = enroll.getCourse();
-        course.setImage(fileService.generatePreSignedUrl(course.getImage(), HttpMethod.GET));
+//        course.setImage(fileService.generatePreSignedUrl(course.getImage(), HttpMethod.GET));
         return EnrollResponse.builder()
                 .courseResponse(modelMapper.map(course, CourseResponse.class))
                 .enrollDate(enroll.getEnrollDate())
