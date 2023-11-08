@@ -57,7 +57,7 @@ public class SessionService implements ISessionService {
         }
 
         session.setSessionName(sessionRequest.getSessionName());
-        session.setVideoAddress(session.getVideoAddress());
+        session.setVideoAddress(sessionRequest.getVideoAddress());
         session.setStatus(session.getStatus());
         sessionRepository.save(session);
     }
