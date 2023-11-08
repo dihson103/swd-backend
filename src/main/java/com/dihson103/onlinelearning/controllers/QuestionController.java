@@ -6,6 +6,7 @@ import com.dihson103.onlinelearning.dto.question.QuestionResponse;
 import com.dihson103.onlinelearning.services.IQuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,7 +56,7 @@ public class QuestionController {
 
     @GetMapping("{session-id}/session")
     @ResponseStatus(OK)
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'ADMIN_COURSE')")
+    @PreAuthorize("isAuthenticated()")
     public ApiResponse<List<QuestionResponse>> getQuestionsBySessionId(@PathVariable("session-id") Integer sessionId){
         List<QuestionResponse> questions = service.findQuestionsBySessionId(sessionId);
         return ApiResponse.<List<QuestionResponse>>builder()
