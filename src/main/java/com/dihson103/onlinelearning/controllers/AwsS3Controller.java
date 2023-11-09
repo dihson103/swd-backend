@@ -2,9 +2,8 @@ package com.dihson103.onlinelearning.controllers;
 
 import com.amazonaws.HttpMethod;
 import com.dihson103.onlinelearning.dto.common.ApiResponse;
-import com.dihson103.onlinelearning.services.FileService;
+import com.dihson103.onlinelearning.services.impl.FileService;
 import com.dihson103.onlinelearning.services.IEnrollService;
-import com.dihson103.onlinelearning.services.impl.EnrollService;
 import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

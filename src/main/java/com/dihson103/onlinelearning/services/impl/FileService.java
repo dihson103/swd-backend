@@ -1,4 +1,4 @@
-package com.dihson103.onlinelearning.services;
+package com.dihson103.onlinelearning.services.impl;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;

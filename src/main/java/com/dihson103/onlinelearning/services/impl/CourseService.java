@@ -1,20 +1,17 @@
 package com.dihson103.onlinelearning.services.impl;
 
-import com.amazonaws.HttpMethod;
 import com.dihson103.onlinelearning.dto.course.CourseResponse;
 import com.dihson103.onlinelearning.dto.course.CourseStatusRequest;
 import com.dihson103.onlinelearning.dto.course.CreateCourseRequest;
 import com.dihson103.onlinelearning.dto.course.UpdateCourseRequest;
 import com.dihson103.onlinelearning.dto.filter.FilterRequestDto;
 import com.dihson103.onlinelearning.entities.Course;
-import com.dihson103.onlinelearning.entities.Enroll;
 import com.dihson103.onlinelearning.entities.Lesson;
 import com.dihson103.onlinelearning.entities.Session;
 import com.dihson103.onlinelearning.repositories.CourseRepository;
 import com.dihson103.onlinelearning.repositories.EnrollRepository;
 import com.dihson103.onlinelearning.repositories.LessonRepository;
 import com.dihson103.onlinelearning.repositories.SessionRepository;
-import com.dihson103.onlinelearning.services.FileService;
 import com.dihson103.onlinelearning.services.FiltersSpecification;
 import com.dihson103.onlinelearning.services.ICourseService;
 import lombok.RequiredArgsConstructor;
